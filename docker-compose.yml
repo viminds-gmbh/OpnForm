@@ -109,6 +109,8 @@ services:
         condition: service_started
       ui:
         condition: service_started
+    networks:
+      - dokploy-network
     healthcheck:
       test: ["CMD-SHELL", "nginx -t && curl -f http://localhost/ || exit 1"]
       interval: 30s
@@ -119,3 +121,7 @@ services:
 volumes:
   postgres-data:
   opnform_storage:
+
+networks:
+  dokploy-network:
+    external: true
