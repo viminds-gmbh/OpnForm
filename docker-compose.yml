@@ -32,8 +32,6 @@ services:
       timeout: 15s
       retries: 3
       start_period: 60s
-    networks:
-      - dokploy-network
 
   api-worker:
     <<: *api-environment
@@ -42,8 +40,6 @@ services:
     environment:
       <<: *api-env
       APP_ENV: production
-    networks:
-      - dokploy-network
     healthcheck:
       test: ["CMD-SHELL", "pgrep -f 'php artisan queue:work' > /dev/null || exit 1"]
       interval: 60s
@@ -58,8 +54,6 @@ services:
     environment:
       <<: *api-env
       APP_ENV: production
-    networks:
-      - dokploy-network
     healthcheck:
       test: ["CMD-SHELL", "php /usr/share/nginx/html/artisan app:scheduler-status --mode=check --max-minutes=3 || exit 1"]
       interval: 60s
@@ -78,8 +72,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 45s
-    networks:
-      - dokploy-network
 
   redis:
     image: redis:7
@@ -88,8 +80,6 @@ services:
       test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
       interval: 30s
       timeout: 5s
-    networks:
-      - dokploy-network
 
   db:
     image: postgres:16
@@ -104,8 +94,6 @@ services:
       timeout: 5s
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    networks:
-      - dokploy-network
 
   ingress:
     image: nginx:1
