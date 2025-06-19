@@ -1,4 +1,4 @@
----
+
 services:
   api: &api-environment
     image: jhumanj/opnform-api:latest
@@ -115,7 +115,12 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+    networks:
+      - dokploy-network
 
 volumes:
   postgres-data:
   opnform_storage:
+networks:
+  dokploy-network:
+    external: true
