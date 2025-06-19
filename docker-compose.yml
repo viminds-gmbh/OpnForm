@@ -117,6 +117,12 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.opnform-ingress.rule=Host(`formbuilder.viminds.de`)" # Ersetze deine-domain.de mit deiner tatsächlichen Domain
+      - "traefik.http.routers.opnform-ingress.entrypoints=websecure" # Oder 'web' wenn du kein SSL verwendest
+      - "traefik.http.routers.opnform-ingress.tls.certresolver=myresolver" # Wenn du Lets Encrypt verwendest (Traefik Konfiguration)
+      - "traefik.http.services.opnform-ingress.loadbalancer.server.port=80" # Der interne Port des Nginx Containers
 
 volumes:
   postgres-data:
