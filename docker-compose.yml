@@ -104,6 +104,8 @@ services:
       - 1338:80
     environment:
       - NGINX_MAX_BODY_SIZE=64m
+    networks:
+      - dokploy-network
     depends_on:
       api:
         condition: service_started
@@ -119,3 +121,7 @@ services:
 volumes:
   postgres-data:
   opnform_storage:
+
+networks:
+  dokploy-network:
+    external: true
