@@ -119,6 +119,3 @@ services:
 volumes:
   postgres-data:
   opnform_storage:
-
-networks:
-  opnform-network: 
