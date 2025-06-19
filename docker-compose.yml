@@ -32,6 +32,8 @@ services:
       timeout: 15s
       retries: 3
       start_period: 60s
+    networks:
+      - dokploy-network
 
   api-worker:
     <<: *api-environment
@@ -46,6 +48,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+    networks:
+      - dokploy-network
 
   api-scheduler:
     <<: *api-environment
@@ -60,6 +64,8 @@ services:
       timeout: 30s
       retries: 3
       start_period: 70s # Allow time for first scheduled run and cache write
+    networks:
+      - dokploy-network
 
   ui:
     image: jhumanj/opnform-client:latest
@@ -72,6 +78,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 45s
+    networks:
+      - dokploy-network
 
   redis:
     image: redis:7
@@ -94,6 +102,8 @@ services:
       timeout: 5s
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    networks:
+      - dokploy-network
 
   ingress:
     image: nginx:1
