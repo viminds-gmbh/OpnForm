@@ -32,8 +32,6 @@ services:
       timeout: 15s
       retries: 3
       start_period: 60s
-    networks:
-      - opnform-network
 
   api-worker:
     <<: *api-environment
@@ -48,8 +46,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
-    networks:
-      - opnform-network
 
   api-scheduler:
     <<: *api-environment
@@ -64,8 +60,6 @@ services:
       timeout: 30s
       retries: 3
       start_period: 70s # Allow time for first scheduled run and cache write
-    networks:
-      - opnform-network
 
   ui:
     image: jhumanj/opnform-client:latest
@@ -78,8 +72,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 45s
-    networks:
-      - opnform-network
 
   redis:
     image: redis:7
@@ -88,8 +80,6 @@ services:
       test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
       interval: 30s
       timeout: 5s
-    networks:
-      - opnform-network
 
   db:
     image: postgres:16
@@ -104,8 +94,6 @@ services:
       timeout: 5s
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    networks:
-      - opnform-network
 
   ingress:
     image: nginx:1
@@ -116,9 +104,6 @@ services:
       - 1338:80
     environment:
       - NGINX_MAX_BODY_SIZE=64m
-    networks:
-      - opnform-network
-      - dokploy-network
     depends_on:
       api:
         condition: service_started
@@ -137,5 +122,3 @@ volumes:
 
 networks:
   opnform-network: 
-  dokploy-network:
-    external: true
